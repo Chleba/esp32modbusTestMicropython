@@ -3,8 +3,9 @@ import uwebsockets.client as wsclient
 from time import sleep
 from config import wifi, displayTexts
 
-global wlan, connecting
+global wlan, connecting, msgNum
 connecting = False
+msgNum = 0
 
 def activateWifi():
   global wlan
@@ -21,17 +22,25 @@ def scanWifi():
     print(s)
 
 def wshello():
-  global connecting
-  print("wshello connecting")
-  print(str(connecting))
-  connecting = True
-  with wsclient.connect('ws://192.168.88.148:5000') as websocket:
-    name = 'ESP32T-DISPLAY maslochod'
-    websocket.send(name)
-    print("> {}".format(name))
+  # global connecting
+  # print("wshello connecting")
+  # print(str(connecting))
+  # if not connecting:
+  #   connecting = True
+  try:
+    with wsclient.connect('ws://192.168.88.148:5000') as websocket:
+      global msgNum
+      msgNum += 1
+      name = 'ESP32T-DISPLAY maslochod id: {}'.format(msgNum)
+      websocket.send(name)
+      print("> {}".format(name))
 
-    greeting = websocket.recv()
-    print("< {}".format(greeting))
+      greeting = websocket.recv()
+      print("< {}".format(greeting))
+  except OSError as osr:
+    print(osr)
+    # connecting = False
+    pass
 
 def wifiThreadFn():
   global wifi, connecting
@@ -41,7 +50,7 @@ def wifiThreadFn():
     print("thread tick connected")
     print(connecting)
     if not wlan.isconnected():
-      if  and not connecting:
+      if not connecting:
         print('Connecting to WiFi ...')
         try:
           wlan.connect(wifi["name"], wifi["pasw"])
@@ -52,7 +61,6 @@ def wifiThreadFn():
           connecting = False
           pass
     else:
-      if
       wshello()
     print("wlan connected: {}".format(str(wlan.isconnected())))  
     sleep(2)
