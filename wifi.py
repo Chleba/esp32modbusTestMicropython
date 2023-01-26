@@ -1,9 +1,10 @@
 import network
 import uwebsockets.client as wsclient
+# from umodbus.tcp import ModbusTCPMaster
 from time import sleep
 from config import wifi, displayTexts
 
-global wlan, connecting, msgNum
+global wlan, connecting, msgNum, modbusCon
 connecting = False
 msgNum = 0
 
@@ -20,6 +21,22 @@ def scanWifi():
     if (i < 5):
       displayTexts[i] = "w: {}, s: {}".format(str(s[0], 'utf-8'), str(s[3]))
     print(s)
+
+def modbusConnect():
+  global modbusCon
+  tcp_device = ModbusTCPMaster(
+      slave_ip='192.168.88.248',  # IP address of the target/client/slave device
+      slave_port=502,         # TCP port of the target/client/slave device
+      # timeout=5.0           # optional, timeout in seconds, default 5.0
+  )
+  slave_addr = 10
+  coil_address = 123
+  coil_qty = 1
+  coil_status = host.read_coils(
+      slave_addr=slave_addr,
+      starting_addr=coil_address,
+      coil_qty=coil_qty)
+  print('Status of coil {}: {}'.format(coil_status, coil_address))
 
 def wshello():
   # global connecting
@@ -61,6 +78,7 @@ def wifiThreadFn():
           connecting = False
           pass
     else:
+      # modbusConnect()
       wshello()
     print("wlan connected: {}".format(str(wlan.isconnected())))  
     sleep(2)
