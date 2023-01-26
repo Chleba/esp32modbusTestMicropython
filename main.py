@@ -2,7 +2,7 @@ from time import sleep
 import display
 import wifi
 import free
-from umodbus.tcp import ModbusTCPMaster
+# from umodbus.tcp import ModbusTCPMaster
 import _thread
 
 wifi.activateWifi()
