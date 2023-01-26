@@ -1,8 +1,8 @@
 global displayTexts, wifi, prevDisplayTexts
 
 wifi = {
-  "name": "cHLeBnik",
-  "pasw": "chlebomaslo"
+  "name": "****",
+  "pasw": "******"
 }
 
 displayTexts = ['a', 'b', 'c', 'd', 'e']
