@@ -34,6 +34,7 @@ Testing examples with implementation of
 - upload files into that directory via `cp ./files/* /pyboard/`
 - after all files is uploaded you may hard reset the ESP32 board
 - type `repl` in rshell to see serial outpur
+- type `python server.py` to run websocket testing server 
 
 ## Usage
 <img src="https://github.com/Chleba/esp32modbusTestMicropython/blob/main/example.jpg" width="240" />
