@@ -36,6 +36,7 @@ Testing examples with implementation of
 - type `repl` in rshell to see serial outpur
 
 ## Usage
+![exampleImage](https://github.com/Chleba/esp32modbusTestMicropython/example.jpg)
 This testing App is just trying to make some performance observations.
 It will make two threads.
 One with rendering scanned WiFi networks on st7789 display.
